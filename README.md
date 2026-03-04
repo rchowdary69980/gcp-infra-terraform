@@ -1,64 +1,19 @@
-📘 README.md — GCP Infrastructure Automation using Terraform & Python
+README.md — GCP Infrastructure Automation using Terraform & Python
 
-📘 Introduction
-This project demonstrates end‑to‑end Google Cloud Platform (GCP) infrastructure provisioning using Terraform and supporting automation using Python.
-
-
-
-
-The assignment required building reusable Terraform modules for the following GCP services:
-
-GCS Bucket
-BigQuery Dataset
-Cloud Function (Infrastructure Only)
-GKE Cluster
-Cloud Composer Environment
-Python automation that helps with GCP infra setup
-
-To satisfy these requirements, I designed a clean, modular Terraform structure where each GCP service is implemented as its own reusable module with clearly defined variables, outputs, best practices, and infrastructure logic.
-A simple main.tf file inside envs/dev composes all modules together, demonstrating how these resources can be deployed consistently into a real GCP project.
-In addition to Terraform, the project also includes a Python automation script that prepares a GCP environment by creating a GCS bucket programmatically. This script shows my understanding of:
-
-Using Python for cloud automation
-Executing gcloud/gsutil commands safely
-Automating foundational infrastructure tasks
-Ensuring repeatable environment setup
-
-
-🎯 Overall Objective
-The primary objective of this work is to showcase:
-
-Practical Terraform module development
-Understanding of core GCP services
-Clean and production‑grade IaC structure
-Use of variables, outputs, and reusable modules
-Automation mindset via Python scripting
-Proper documentation and readability
-
-Every resource is built from scratch with industry best practices in mind, focusing on modularity, security, scalability, and clarity — ensuring the infrastructure is easy to deploy, understand, and maintain.
-
-🧠 What This Project Demonstrates
-By completing this assignment, I showcase my understanding of:
-
-How GCP resources work (purpose, inputs, dependencies)
-How to design and structure Terraform modules
-How to use Workload Identity, network ranges, node pools, and service accounts
-How to automate infrastructure setup using Python
-How to follow DevOps/IaC best practices
-How to write clean, readable, and production‑oriented code
-This project contains Terraform modules for provisioning key Google Cloud services and a Python automation script to streamline GCP setup activities.
-The assignment required creating Terraform modules for:
-
-GCS Bucket
-BigQuery Dataset
-Cloud Function (Infrastructure only)
-GKE Cluster
-Cloud Composer Environment
-Python automation for GCP setup
-
-Additionally, a main.tf combines these modules, and this README explains each resource, what it is used for, required inputs, and best practices.
-
-📂 Project Structure
+Introduction
+This project is about building and automating GCP infrastructure using Terraform modules and a Python script.
+I created separate Terraform modules for each major GCP service so that everything is clean, reusable, and easy to manage.
+The services I worked with are:
+•	GCS Bucket
+•	BigQuery Dataset
+•	Cloud Function (Infrastructure Only)
+•	GKE Cluster
+•	Cloud Composer Environment
+•	A Python automation script for creating a bucket
+The idea behind the project was to understand how cloud resources work, how Terraform modules can simplify infrastructure, and how Python can automate basic tasks.
+Throughout this assignment, I focused on keeping things modular, readable, and following best practices used in real world DevOps teams.
+________________________________________
+Project Structure
 gcp-infra-terraform/
 │
 ├── modules/
@@ -78,122 +33,125 @@ gcp-infra-terraform/
 │       └── backend.tf
 │
 └── scripts/
-      └── app.py     # Python automation script
-
-Each module is fully reusable, contains its own variables and outputs, and follows Terraform best practices.
-
-
-🪣 GCS Bucket (Terraform Module)
-📌 Understanding the Resource
-A Google Cloud Storage (GCS) Bucket is Google Cloud’s fully‑managed object storage service.
-It is used to store files such as:
-
-Application artifacts
-Cloud Function source zips
-Logs
-Backups
-Infrastructure state files
-Analytics data
-Public or static assets
-
-GCS provides durability, scalability, and global accessibility — making it a foundational service for almost every cloud workload.
-
-🧠 Why This Resource Is Needed
-Buckets are central to modern cloud infrastructure because:
-
-Terraform or deployment pipelines often need an artifact repository
-BigQuery external tables load data from GCS
-Cloud Functions (Gen2) require their source code to be stored in GCS
-GKE workloads may fetch config files or binaries from GCS
-It provides universal, cost‑effective object storage
-
-In short, almost every GCP architecture depends on at least one GCS bucket.
-
-⚙️ Inputs & Why They Matter
-Below are the key inputs your module requires — and the reasoning behind each one:
-bucket_name
-
-Must be globally unique across all of GCP.
-Terraform cannot guess this; you must provide it explicitly.
-Ensures safe identification of storage units.
-
-location
-
-Decides which region the bucket physically resides in.
-Impacts:
-
-Latency (closer to workloads = faster)
-Cost
-Compliance & data residency
-
-
-
-Example: asia-south1 (Mumbai)
-storage_class
-Common options:
-
-STANDARD → Frequently accessed
-NEARLINE → Accessed monthly
-COLDLINE → Accessed quarterly
-ARCHIVE → Accessed annually
-
-This affects cost and availability.
-versioning
-
-When enabled, GCS keeps all historical versions of objects.
-Protects against:
-
-Accidental deletion
-Overwrites
-Corruption
-
-
-
-Strongly recommended for production workloads.
-force_destroy
-
-If set to true:
-
-Terraform can delete the bucket even when objects exist.
-
-
-Useful in development environments.
-Not recommended for production.
-
-
-📁 Terraform Module Structure
-modules/gcs_bucket/main.tf
-Terraformresource "google_storage_bucket" "bucket" {  name     = var.bucket_name  location = var.location  storage_class = var.storage_class  force_destroy = var.force_destroy  versioning {    enabled = var.versioning  }}Show more lines
-modules/gcs_bucket/variables.tf
-Terraformvariable "bucket_name"   { type = string }variable "location"      { type = string }variable "storage_class" {  type    = string  default = "STANDARD"}variable "versioning" {  type    = bool  default = true}variable "force_destroy" {  type    = bool  default = false}Show more lines
-modules/gcs_bucket/outputs.tf
-Terraformoutput "bucket_name" {  value = google_storage_bucket.bucket.name}Show more lines
-
-📦 How to Use This Module (envs/dev/main.tf)
-Terraformmodule "gcs_bucket" {  source        = "../../modules/gcs_bucket"  bucket_name   = "rahul-dev-bucket-12345"  location      = var.region  storage_class = "STANDARD"  versioning    = true  force_destroy = true}Show more lines
-
-🔐 Best Practices
-✔ Enable versioning
-Prevents accidental loss of objects.
-✔ Use least‑privilege IAM
-Avoid ACLs; use IAM for access management.
-✔ Use meaningful naming conventions
-Example:
-<project>-<env>-bucket
-✔ Avoid force_destroy = true in production
-Protect important data.
-✔ Keep bucket region and workload region aligned
-Reduces latency & egress costs.
-✔ Use lifecycle rules
-Automatically delete old logs or archives.
-
-🏁 Summary
-The GCS Bucket module:
-
-Provides reusable, clean object storage provisioning
-Supports Terraform automation
-Enables versioning and force_destroy flags
-Is aligned with GCP best practices
-Is a foundational component consumed by other modules (Cloud Functions, BigQuery, etc.)
-
-It is one of the simplest but most essential modules in your project.
+      └── app.py
+Each module is reusable and parameterized.
+The envs/dev folder acts as the environment where I combine all modules to deploy the entire stack.
+________________________________________
+1. GCS Bucket
+What I Understood
+A GCS bucket is Google Cloud’s object storage. It is used to store files like logs, backups, artifacts, Cloud Function code, and even Terraform remote state.
+I learned that bucket names must be globally unique and that enabling versioning helps recover overwritten files.
+Why We Need It
+Most cloud systems rely on buckets:
+•	Cloud Functions need a bucket to store deployment code
+•	BigQuery uses buckets to load CSV/JSON/Parquet data
+•	CI/CD pipelines push artifacts here
+•	Applications may store uploaded content
+So provisioning a bucket first is important in most GCP deployments.
+How I Ran It
+cd envs/dev
+terraform init
+terraform apply -target="module.gcs_bucket"
+Then I checked the bucket in the Cloud Console under Storage.
+________________________________________
+2. BigQuery Dataset
+What I Understood
+A BigQuery dataset is like a “database schema.” It stores tables, views, and metadata. BigQuery itself is a serverless data warehouse used for analytics, reporting, and large SQL workloads.
+Why We Need It
+Datasets help in:
+•	Organizing analytical data
+•	Enforcing access control
+•	Running ETL/ELT pipelines
+•	Integrating with Dataflow or Cloud Functions
+It becomes the foundation of any analytics system.
+How I Ran It
+terraform apply -target="module.bigquery_dataset"
+I then verified it in the BigQuery UI under my project.
+________________________________________
+3. Cloud Function (Infrastructure Only)
+What I Understood
+Cloud Functions Gen2 is a serverless compute service.
+Gen2 uses Cloud Run under the hood, which gives better scaling and performance.
+In this assignment, I only created the infrastructure, not the actual function code. The module provisions:
+•	runtime
+•	region
+•	service account
+•	the Cloud Function resource itself
+•	the bucket that holds the function source
+Why We Need It
+Cloud Functions are used for lightweight tasks and event-driven workflows such as notifications, image processing, triggers from GCS, etc. Gen2 makes it more powerful.
+How I Ran It
+terraform apply -target="module.cloud_function"
+Then I checked it in the Cloud Functions console.
+________________________________________
+4. GKE Cluster
+What I Understood
+GKE is Google’s managed Kubernetes service.
+This was the most complex part of the assignment. I learned:
+•	GKE needs a VPC, subnet, and secondary ranges for Pods and Services
+•	Node pools define machine types and scaling
+•	Zonal clusters are fine for dev; regional clusters offer high availability
+•	Workload Identity is the recommended way to link GCP IAM with Kubernetes
+This cluster allows running containerized applications at scale.
+Why We Need It
+Modern applications often run on Kubernetes, so provisioning a GKE cluster using Terraform teaches how to manage infrastructure for containerized workloads.
+How I Ran It
+terraform apply -target="module.gke_cluster"
+I verified it in the GKE dashboard.
+________________________________________
+5. Cloud Composer Environment
+What I Understood
+Cloud Composer is Google’s managed Airflow workflow service.
+It is mainly used for data pipelines, scheduled tasks, and orchestrating GCP services like BigQuery, Dataflow, and Cloud Storage.
+While working on this, I learned:
+•	Composer v2 is built on GKE Autopilot
+•	It requires a dedicated service account
+•	Environment creation takes longer (20–40 minutes)
+•	Composer creates its own GCS DAG bucket automatically
+Why We Need It
+Data orchestration is essential in data engineering. Composer helps manage complex workflows without maintaining Airflow manually.
+How I Ran It
+terraform apply -target="module.composer"
+After creation, I accessed the Airflow UI through the Composer environment link.
+________________________________________
+6. Python Automation Script
+What I Understood
+The script (app.py) automates GCS bucket creation using Python.
+It uses PowerShell commands internally to execute:
+•	gcloud to set the project
+•	gcloud to enable the Storage API
+•	gsutil to create a bucket and enable versioning
+This helps automate tasks that developers or DevOps engineers might frequently perform manually.
+Why We Need It
+This script shows I understand:
+•	How to automate cloud operations
+•	How to interact with GCP tools via Python
+•	How to safely run shell commands and handle outputs
+How I Ran It
+python scripts/app.py --project <PROJECT_ID> --region asia-south1 --bucket my-bucket-123
+________________________________________
+How to Deploy the Full Infrastructure
+Step 1: Go to environment directory
+cd envs/dev
+Step 2: Initialize Terraform
+terraform init
+Step 3: Preview
+terraform plan
+Step 4: Apply
+terraform apply
+Step 5: Destroy (optional)
+terraform destroy
+________________________________________
+What I Learned from This Project
+•	How different GCP services work and depend on each other
+•	How to build reusable Terraform modules
+•	How to structure cloud projects into modules and environments
+•	The importance of networking (especially for GKE and Composer)
+•	How service accounts and IAM tie everything together
+•	How to automate simple tasks using Python
+•	How to follow IaC best practices
+•	How to push clean code using .gitignore
+•	How to troubleshoot real-world cloud issues
+________________________________________
+Conclusion
+This project helped me understand both Terraform module design and how core GCP services fit together. By separating everything into modules and adding Python automation, I created a clear, reusable, and practical infrastructure setup that can be extended further in the future.

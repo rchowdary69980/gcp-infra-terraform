@@ -1,0 +1,72 @@
+# ------------------------------
+# TERRAFORM
+# ------------------------------
+
+# Local .terraform directories
+.terraform/
+**/.terraform/
+
+# Terraform state files
+terraform.tfstate
+terraform.tfstate.*
+*.tfstate
+*.tfstate.*
+
+# Terraform plan files
+*.tfplan
+plan.out
+
+# Override files (do not commit)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform lock file (optional — commit only in teams)
+.terraform.lock.hcl
+
+# Backup files
+*.backup
+
+# ------------------------------
+# PYTHON
+# ------------------------------
+
+# Bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.env/
+.env.bak/
+
+# ------------------------------
+# GCP / DEPLOYMENT ARTIFACTS
+# ------------------------------
+
+# Cloud Function source ZIP
+*.zip
+
+# DAG folders (if any, for composer)
+dags/
+plugins/
+
+# Local logs
+*.log
+
+# ------------------------------
+# OS / EDITOR FILES
+# ------------------------------
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# VS Code
+.vscode/
