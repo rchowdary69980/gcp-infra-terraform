@@ -1,0 +1,466 @@
+{
+  "version": 4,
+  "terraform_version": "1.14.1",
+  "serial": 96,
+  "lineage": "504553c3-5ebd-2fee-daf0-1510e3f6d521",
+  "outputs": {
+    "artifact_bucket_name": {
+      "value": "artifacts-project-0353a607-51f8-47be-8e2",
+      "type": "string"
+    },
+    "artifact_bucket_url": {
+      "value": "gs://artifacts-project-0353a607-51f8-47be-8e2",
+      "type": "string"
+    },
+    "bigquery_dataset_id": {
+      "value": "analytics",
+      "type": "string"
+    },
+    "bigquery_dataset_self_link": {
+      "value": "https://bigquery.googleapis.com/bigquery/v2/projects/project-0353a607-51f8-47be-8e2/datasets/analytics",
+      "type": "string"
+    },
+    "gke_cluster_name": {
+      "value": "demo-gke",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "google_compute_network",
+      "name": "vpc",
+      "provider": "provider[\"registry.terraform.io/hashicorp/google\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "auto_create_subnetworks": false,
+            "delete_default_routes_on_create": false,
+            "description": "",
+            "enable_ula_internal_ipv6": false,
+            "gateway_ipv4": "",
+            "id": "projects/project-0353a607-51f8-47be-8e2/global/networks/vpc-main",
+            "internal_ipv6_range": "",
+            "mtu": 0,
+            "name": "vpc-main",
+            "network_firewall_policy_enforcement_order": "AFTER_CLASSIC_FIREWALL",
+            "numeric_id": "8932247139284358508",
+            "project": "project-0353a607-51f8-47be-8e2",
+            "routing_mode": "REGIONAL",
+            "self_link": "https://www.googleapis.com/compute/v1/projects/project-0353a607-51f8-47be-8e2/global/networks/vpc-main",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjEyMDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19"
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "google_compute_subnetwork",
+      "name": "apps",
+      "provider": "provider[\"registry.terraform.io/hashicorp/google\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "creation_timestamp": "2026-03-03T01:36:33.110-08:00",
+            "description": "",
+            "external_ipv6_prefix": "",
+            "fingerprint": null,
+            "gateway_address": "10.10.0.1",
+            "id": "projects/project-0353a607-51f8-47be-8e2/regions/asia-south1/subnetworks/apps-a-south1",
+            "internal_ipv6_prefix": "",
+            "ip_cidr_range": "10.10.0.0/24",
+            "ipv6_access_type": "",
+            "ipv6_cidr_range": "",
+            "log_config": [],
+            "name": "apps-a-south1",
+            "network": "https://www.googleapis.com/compute/v1/projects/project-0353a607-51f8-47be-8e2/global/networks/vpc-main",
+            "private_ip_google_access": true,
+            "private_ipv6_google_access": "DISABLE_GOOGLE_ACCESS",
+            "project": "project-0353a607-51f8-47be-8e2",
+            "purpose": "PRIVATE",
+            "region": "asia-south1",
+            "role": "",
+            "secondary_ip_range": [
+              {
+                "ip_cidr_range": "10.20.0.0/16",
+                "range_name": "pods"
+              },
+              {
+                "ip_cidr_range": "10.30.0.0/20",
+                "range_name": "services"
+              }
+            ],
+            "self_link": "https://www.googleapis.com/compute/v1/projects/project-0353a607-51f8-47be-8e2/regions/asia-south1/subnetworks/apps-a-south1",
+            "send_secondary_ip_range_if_empty": null,
+            "stack_type": "IPV4_ONLY",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjEyMDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "google_compute_network.vpc"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "google_project_service",
+      "name": "gke_apis",
+      "provider": "provider[\"registry.terraform.io/hashicorp/google\"]",
+      "instances": [
+        {
+          "index_key": "compute.googleapis.com",
+          "schema_version": 0,
+          "attributes": {
+            "disable_dependent_services": null,
+            "disable_on_destroy": false,
+            "id": "project-0353a607-51f8-47be-8e2/compute.googleapis.com",
+            "project": "project-0353a607-51f8-47be-8e2",
+            "service": "compute.googleapis.com",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjEyMDAwMDAwMDAwMDAsInJlYWQiOjYwMDAwMDAwMDAwMCwidXBkYXRlIjoxMjAwMDAwMDAwMDAwfX0="
+        },
+        {
+          "index_key": "container.googleapis.com",
+          "schema_version": 0,
+          "attributes": {
+            "disable_dependent_services": null,
+            "disable_on_destroy": false,
+            "id": "project-0353a607-51f8-47be-8e2/container.googleapis.com",
+            "project": "project-0353a607-51f8-47be-8e2",
+            "service": "container.googleapis.com",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjEyMDAwMDAwMDAwMDAsInJlYWQiOjYwMDAwMDAwMDAwMCwidXBkYXRlIjoxMjAwMDAwMDAwMDAwfX0="
+        },
+        {
+          "index_key": "iam.googleapis.com",
+          "schema_version": 0,
+          "attributes": {
+            "disable_dependent_services": null,
+            "disable_on_destroy": false,
+            "id": "project-0353a607-51f8-47be-8e2/iam.googleapis.com",
+            "project": "project-0353a607-51f8-47be-8e2",
+            "service": "iam.googleapis.com",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjEyMDAwMDAwMDAwMDAsInJlYWQiOjYwMDAwMDAwMDAwMCwidXBkYXRlIjoxMjAwMDAwMDAwMDAwfX0="
+        },
+        {
+          "index_key": "logging.googleapis.com",
+          "schema_version": 0,
+          "attributes": {
+            "disable_dependent_services": null,
+            "disable_on_destroy": false,
+            "id": "project-0353a607-51f8-47be-8e2/logging.googleapis.com",
+            "project": "project-0353a607-51f8-47be-8e2",
+            "service": "logging.googleapis.com",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjEyMDAwMDAwMDAwMDAsInJlYWQiOjYwMDAwMDAwMDAwMCwidXBkYXRlIjoxMjAwMDAwMDAwMDAwfX0="
+        },
+        {
+          "index_key": "monitoring.googleapis.com",
+          "schema_version": 0,
+          "attributes": {
+            "disable_dependent_services": null,
+            "disable_on_destroy": false,
+            "id": "project-0353a607-51f8-47be-8e2/monitoring.googleapis.com",
+            "project": "project-0353a607-51f8-47be-8e2",
+            "service": "monitoring.googleapis.com",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjEyMDAwMDAwMDAwMDAsInJlYWQiOjYwMDAwMDAwMDAwMCwidXBkYXRlIjoxMjAwMDAwMDAwMDAwfX0="
+        }
+      ]
+    },
+    {
+      "module": "module.artifact_bucket",
+      "mode": "managed",
+      "type": "google_storage_bucket",
+      "name": "bucket",
+      "provider": "provider[\"registry.terraform.io/hashicorp/google\"]",
+      "instances": [
+        {
+          "schema_version": 2,
+          "attributes": {
+            "autoclass": [],
+            "cors": [],
+            "custom_placement_config": [],
+            "default_event_based_hold": false,
+            "effective_labels": {
+              "env": "dev",
+              "owner": "rahul"
+            },
+            "enable_object_retention": false,
+            "encryption": [],
+            "force_destroy": false,
+            "id": "artifacts-project-0353a607-51f8-47be-8e2",
+            "labels": {
+              "env": "dev",
+              "owner": "rahul"
+            },
+            "lifecycle_rule": [],
+            "location": "ASIA-SOUTH1",
+            "logging": [],
+            "name": "artifacts-project-0353a607-51f8-47be-8e2",
+            "project": "project-0353a607-51f8-47be-8e2",
+            "project_number": -1867369944,
+            "public_access_prevention": "inherited",
+            "requester_pays": false,
+            "retention_policy": [],
+            "rpo": null,
+            "self_link": "https://www.googleapis.com/storage/v1/b/artifacts-project-0353a607-51f8-47be-8e2",
+            "soft_delete_policy": [
+              {
+                "effective_time": "2026-03-03T08:13:49.149Z",
+                "retention_duration_seconds": 604800
+              }
+            ],
+            "storage_class": "STANDARD",
+            "terraform_labels": {
+              "env": "dev",
+              "owner": "rahul"
+            },
+            "timeouts": null,
+            "uniform_bucket_level_access": true,
+            "url": "gs://artifacts-project-0353a607-51f8-47be-8e2",
+            "versioning": [
+              {
+                "enabled": true
+              }
+            ],
+            "website": []
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsInJlYWQiOjI0MDAwMDAwMDAwMCwidXBkYXRlIjoyNDAwMDAwMDAwMDB9LCJzY2hlbWFfdmVyc2lvbiI6IjIifQ=="
+        }
+      ]
+    },
+    {
+      "module": "module.bq_dataset",
+      "mode": "managed",
+      "type": "google_bigquery_dataset",
+      "name": "dataset",
+      "provider": "provider[\"registry.terraform.io/hashicorp/google\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "access": [
+              {
+                "dataset": [],
+                "domain": "",
+                "group_by_email": "",
+                "iam_member": "",
+                "role": "OWNER",
+                "routine": [],
+                "special_group": "",
+                "user_by_email": "rahulc69980@gmail.com",
+                "view": []
+              },
+              {
+                "dataset": [],
+                "domain": "",
+                "group_by_email": "",
+                "iam_member": "",
+                "role": "OWNER",
+                "routine": [],
+                "special_group": "projectOwners",
+                "user_by_email": "",
+                "view": []
+              },
+              {
+                "dataset": [],
+                "domain": "",
+                "group_by_email": "",
+                "iam_member": "",
+                "role": "READER",
+                "routine": [],
+                "special_group": "projectReaders",
+                "user_by_email": "",
+                "view": []
+              },
+              {
+                "dataset": [],
+                "domain": "",
+                "group_by_email": "",
+                "iam_member": "",
+                "role": "WRITER",
+                "routine": [],
+                "special_group": "projectWriters",
+                "user_by_email": "",
+                "view": []
+              }
+            ],
+            "creation_time": -1289257982,
+            "dataset_id": "analytics",
+            "default_collation": "",
+            "default_encryption_configuration": [],
+            "default_partition_expiration_ms": 0,
+            "default_table_expiration_ms": 0,
+            "delete_contents_on_destroy": false,
+            "description": "",
+            "effective_labels": {
+              "env": "dev",
+              "owner": "rahul"
+            },
+            "etag": "H8Pb5NVORmDvXo4JA3YZiA==",
+            "external_dataset_reference": [],
+            "friendly_name": "",
+            "id": "projects/project-0353a607-51f8-47be-8e2/datasets/analytics",
+            "is_case_insensitive": false,
+            "labels": {
+              "env": "dev",
+              "owner": "rahul"
+            },
+            "last_modified_time": -1289257982,
+            "location": "asia-south1",
+            "max_time_travel_hours": "168",
+            "project": "project-0353a607-51f8-47be-8e2",
+            "resource_tags": {},
+            "self_link": "https://bigquery.googleapis.com/bigquery/v2/projects/project-0353a607-51f8-47be-8e2/datasets/analytics",
+            "storage_billing_model": "",
+            "terraform_labels": {
+              "env": "dev",
+              "owner": "rahul"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMjAwMDAwMDAwMDAwLCJkZWxldGUiOjEyMDAwMDAwMDAwMDAsInVwZGF0ZSI6MTIwMDAwMDAwMDAwMH19"
+        }
+      ]
+    },
+    {
+      "module": "module.gke_cluster",
+      "mode": "managed",
+      "type": "google_container_cluster",
+      "name": "cluster",
+      "provider": "provider[\"registry.terraform.io/hashicorp/google\"]",
+      "instances": [
+        {
+          "status": "tainted",
+          "schema_version": 2,
+          "attributes": {
+            "addons_config": null,
+            "allow_net_admin": null,
+            "authenticator_groups_config": null,
+            "binary_authorization": [],
+            "cluster_autoscaling": null,
+            "cluster_ipv4_cidr": null,
+            "confidential_nodes": null,
+            "cost_management_config": null,
+            "database_encryption": null,
+            "datapath_provider": null,
+            "default_max_pods_per_node": null,
+            "default_snat_status": null,
+            "deletion_protection": false,
+            "description": null,
+            "dns_config": [],
+            "enable_autopilot": null,
+            "enable_cilium_clusterwide_network_policy": false,
+            "enable_intranode_visibility": null,
+            "enable_k8s_beta_apis": [],
+            "enable_kubernetes_alpha": false,
+            "enable_l4_ilb_subsetting": false,
+            "enable_legacy_abac": false,
+            "enable_multi_networking": false,
+            "enable_shielded_nodes": true,
+            "enable_tpu": null,
+            "endpoint": null,
+            "fleet": [],
+            "gateway_api_config": null,
+            "id": "projects/project-0353a607-51f8-47be-8e2/locations/asia-south1/clusters/demo-gke",
+            "identity_service_config": null,
+            "initial_node_count": 1,
+            "ip_allocation_policy": [
+              {
+                "additional_pod_ranges_config": [],
+                "cluster_ipv4_cidr_block": "",
+                "cluster_secondary_range_name": "pods",
+                "pod_cidr_overprovision_config": [],
+                "services_ipv4_cidr_block": "",
+                "services_secondary_range_name": "services",
+                "stack_type": "IPV4"
+              }
+            ],
+            "label_fingerprint": null,
+            "location": "asia-south1",
+            "logging_config": null,
+            "logging_service": null,
+            "maintenance_policy": [],
+            "master_auth": null,
+            "master_authorized_networks_config": null,
+            "master_version": null,
+            "mesh_certificates": null,
+            "min_master_version": null,
+            "monitoring_config": null,
+            "monitoring_service": null,
+            "name": "demo-gke",
+            "network": "vpc-main",
+            "network_policy": [],
+            "networking_mode": "VPC_NATIVE",
+            "node_config": null,
+            "node_locations": [],
+            "node_pool": null,
+            "node_pool_auto_config": null,
+            "node_pool_defaults": null,
+            "node_version": null,
+            "notification_config": null,
+            "operation": null,
+            "private_cluster_config": [],
+            "private_ipv6_google_access": null,
+            "project": "project-0353a607-51f8-47be-8e2",
+            "release_channel": null,
+            "remove_default_node_pool": true,
+            "resource_labels": null,
+            "resource_usage_export_config": [],
+            "security_posture_config": null,
+            "self_link": null,
+            "service_external_ips_config": null,
+            "services_ipv4_cidr": null,
+            "subnetwork": "apps-a-south1",
+            "timeouts": null,
+            "tpu_ipv4_cidr_block": null,
+            "vertical_pod_autoscaling": null,
+            "workload_identity_config": [
+              {
+                "workload_pool": "project-0353a607-51f8-47be-8e2.svc.id.goog"
+              }
+            ]
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoyNDAwMDAwMDAwMDAwLCJkZWxldGUiOjI0MDAwMDAwMDAwMDAsInJlYWQiOjI0MDAwMDAwMDAwMDAsInVwZGF0ZSI6MzYwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMiJ9",
+          "dependencies": [
+            "google_compute_network.vpc",
+            "google_compute_subnetwork.apps",
+            "google_project_service.gke_apis"
+          ]
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
