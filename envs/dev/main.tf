@@ -30,7 +30,7 @@ output "artifact_bucket_url" {
 module "bq_dataset" {
   source     = "../../modules/bigquery_dataset"
   project_id = var.project_id
-  dataset_id = "analytics"      # We can change this
+  dataset_id = "analytics_3"      # We can change this
   location   = "asia-south1"
   labels = {
     env   = "dev"
